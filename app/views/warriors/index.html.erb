@@ -1,0 +1,27 @@
+<h1>Listing warriors</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Code</th>
+    <th>Level</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @warriors.each do |warrior| %>
+  <tr>
+    <td><%= warrior.name %></td>
+    <td><%= warrior.code %></td>
+    <td><%= warrior.level %></td>
+    <td><%= link_to 'Show', warrior %></td>
+    <td><%= link_to 'Edit', edit_warrior_path(warrior) %></td>
+    <td><%= link_to 'Destroy', warrior, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Warrior', new_warrior_path %>

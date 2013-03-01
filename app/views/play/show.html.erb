@@ -1,0 +1,64 @@
+<div class="content">
+  <div class="leftPanel">
+
+    <h1>Play RubyWarrior</h1>
+
+    <br />
+
+    <p>
+      <h2>
+        <%= @warrior.name %>
+        ( lvl: <%= @warrior.level %> )
+      </h2>
+    </p>
+
+    <%= form_for(@warrior) do |f| %>
+      <div class="field">
+        <%= f.label :code %><br />
+        <%= f.text_area :code %>
+      </div>
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+    <% end %>
+
+  </div>
+
+
+  <div class="rightPanel">
+
+    <p><%= simple_format @message %></p>
+
+    <br />
+
+    total frames: <%= @gameFrames.length %>
+
+    <pre class="map">
+      loading...
+    </pre>
+
+  </div>
+</div>
+
+<script>
+
+  window.frameJSON = <%= raw @frameJSON.to_json %>;
+  window.frameData = JSON.parse( window.frameJSON );
+
+  window.frameData.forEach(function(frame,index){
+
+    setTimeout( function(){
+      var formattedLevelMap;
+      formattedLevelMap = frame.levelMap; //.split(' ').join('_');
+      formattedLevelMap = "frame: "+index+"\n"+formattedLevelMap;
+      formattedLevelMap = formattedLevelMap+"\n"+frame.actionsMessage;
+      formattedLevelMap = formattedLevelMap.split('\n').join('<br />');
+
+      $('.map').html(formattedLevelMap)
+    },300*index);
+
+  });
+
+</script>
+
+

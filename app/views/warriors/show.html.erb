@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @warrior.name %>
+</p>
+
+<p>
+  <b>Code:</b>
+  <%= @warrior.code %>
+</p>
+
+<p>
+  <b>Level:</b>
+  <%= @warrior.level %>
+</p>
+
+
+<%= link_to 'Edit', edit_warrior_path(@warrior) %> |
+<%= link_to 'Back', warriors_path %>
