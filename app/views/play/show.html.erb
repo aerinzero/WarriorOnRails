@@ -1,16 +1,58 @@
 <div class="content">
+
   <div class="leftPanel">
 
     <h1>Play RubyWarrior</h1>
+    <br />
+    <p><h2>
+      <%= @warrior.name %> ( lvl: <%= @warrior.level %> )
+    </h2></p>
+
+    
+    <div class="node">
+      <div class="flagHolder">
+        <div class="flag"><div class="icon radish"></div></div>
+      </div>
+      <div class="nodeitems">
+      </div>
+    </div>
+
+    
+    <div class="node">
+      <div class="flagHolder">
+        <div class="flag"><div class="icon cherry"></div></div>
+      </div>
+      <div class="nodeitems">
+        <div class="item"><div class="icon run"></div></div>
+        <div class="item"><div class="icon turn"></div></div>
+        <div class="item"><div class="icon attack"></div></div>
+      </div>
+    </div>
+
+    
+    <div class="node">
+      <div class="flagHolder">
+        <div class="flag"><div class="icon blackberry"></div></div>
+      </div>
+      <div class="nodeitems">
+      </div>
+    </div>
+
+    <div class="bank">
+      <div class="item"><div class="icon run"></div></div>
+      <div class="item"><div class="icon turn"></div></div>
+      <div class="item"><div class="icon attack"></div></div>
+    </div>
 
     <br />
 
-    <p>
-      <h2>
-        <%= @warrior.name %>
-        ( lvl: <%= @warrior.level %> )
-      </h2>
-    </p>
+  </div>
+
+  <div class="rightPanel">
+
+    <pre class="map">loading...</pre>
+
+    <pre><%= simple_format @readme %></pre>
 
     <%= form_for(@warrior) do |f| %>
       <div class="field">
@@ -22,22 +64,11 @@
         </div>
     <% end %>
 
-  </div>
-
-
-  <div class="rightPanel">
-
     <p><%= simple_format @message %></p>
 
-    <br />
-
-    total frames: <%= @gameFrames.length %>
-
-    <pre class="map">
-      loading...
-    </pre>
 
   </div>
+
 </div>
 
 <script>
@@ -49,8 +80,7 @@
 
     setTimeout( function(){
       var formattedLevelMap;
-      formattedLevelMap = frame.levelMap; //.split(' ').join('_');
-      formattedLevelMap = "frame: "+index+"\n"+formattedLevelMap;
+      formattedLevelMap = frame.levelMap;
       formattedLevelMap = formattedLevelMap+"\n"+frame.actionsMessage;
       formattedLevelMap = formattedLevelMap.split('\n').join('<br />');
 
@@ -62,3 +92,4 @@
 </script>
 
 
+  
