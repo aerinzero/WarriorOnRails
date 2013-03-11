@@ -18,7 +18,7 @@
 
         <div>
           <div class="bankItem">
-            <div class="item action"><div class="icon run"></div></div>
+            <div class="item action action-move"><div class="icon run"></div></div>
           </div>
           <p>
           move forward one tile
@@ -27,14 +27,14 @@
 
         <div>
           <div class="bankItem">
-            <div class="item action"><div class="icon turn"></div></div>
+            <div class="item action action-turn"><div class="icon turn"></div></div>
           </div>
           turn right
         </div>
 
         <div>
           <div class="bankItem">
-            <div class="item action"><div class="icon attack"></div></div>
+            <div class="item action action-attack"><div class="icon attack"></div></div>
           </div>
           attack forward
         </div>
@@ -58,28 +58,28 @@
 
         <div>
           <div class="bankItem">
-            <div class="item condition"><div class="icon blackberry"></div></div>
+            <div class="item condition condition-empty"><div class="icon blackberry"></div></div>
           </div>
           if forward tile is empty
         </div>
 
         <div>
           <div class="bankItem">
-          <div class="item condition"><div class="icon radish"></div></div>
+          <div class="item condition condition-enemy"><div class="icon radish"></div></div>
           </div>
           if forward tile is enemy
         </div>
 
         <div>
           <div class="bankItem">
-          <div class="item condition"><div class="icon acorn"></div></div>
+          <div class="item condition condition-wall"><div class="icon acorn"></div></div>
           </div>
           if forward tile is wall
         </div>
 
         <div>
           <div class="bankItem">
-          <div class="item condition"><div class="icon cherry"></div></div>
+          <div class="item condition condition-lowHealth"><div class="icon cherry"></div></div>
           </div>
           if low health
         </div>
@@ -100,7 +100,7 @@
     <%= form_for(@warrior) do |f| %>
       <div class="field">
         <%= f.label :code %><br />
-        <%= f.text_area :code %>
+        <%= f.text_area :code, disabled: true %>
       </div>
         <div class="actions">
           <%= f.submit %>
