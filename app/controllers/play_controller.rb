@@ -26,7 +26,7 @@ class PlayController < ApplicationController
     # @game.start
       RubyWarrior::UI.puts "Welcome to Ruby Warrior!\n"
       # @profile = RubyWarrior::Profile.load( ... )
-        @game.profile = RubyWarrior::Profile.decode( @warrior.data ) 
+        @game.profile = RubyWarrior::Profile.decode( @warrior.data )
 
 
     # @game.play_normal_mode
@@ -52,7 +52,7 @@ class PlayController < ApplicationController
                 File.open(level.player_path + '/player.rb', 'w') do |f|
                   f << @warrior.code
                 end
-          @game.profile.level_number += 1
+          # @game.profile.level_number += 1
           # profile.save # this saves score and new abilities too
             # dont want to save the results from the first run until we have 'play_current_level' built out
             # @warrior.update_attributes(data:@game.profile.encode)
@@ -62,7 +62,7 @@ class PlayController < ApplicationController
           current_level = @game.current_level
           continue = true
           current_level.load_player
-          # ^ this is where we would use the updated code
+          # ^ this is where we use the updated code
 
           RubyWarrior::UI.puts "Starting Level #{current_level.number}"
 
@@ -78,6 +78,7 @@ class PlayController < ApplicationController
               continue = false
             end
             current_level.tally_points
+
             if @game.profile.epic?
               RubyWarrior::UI.puts final_report if final_report && !continue
             else
@@ -86,12 +87,16 @@ class PlayController < ApplicationController
           else
             continue = false
             RubyWarrior::UI.puts "Sorry, you failed level #{current_level.number}. Change your script and try again."
-            # if !Config.skip_input? && current_level.clue && RubyWarrior::UI.ask("Would you like to read the additional clues for this level?")
-            #   RubyWarrior::UI.puts current_level.clue.hard_wrap
-            # end
+            if current_level.clue # && RubyWarrior::UI.ask("Would you like to read the additional clues for this level?") !RubyWarrior::Config.skip_input? &&
+              RubyWarrior::UI.puts current_level.clue.hard_wrap
+            end
           end
-          continue
+
+          # if continue
+            # @warrior.
       # end
+      @warrior.data = @game.profile.encode
+      @warrior.save
 
     @message = @ios.string
     

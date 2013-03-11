@@ -8,6 +8,15 @@
       <%= @warrior.name %> ( lvl: <%= @warrior.level %> )
     </h2></p>
 
+    <%= form_for(@warrior,remote: true) do |f| %>
+      <div class="field">
+        <%= f.label :code %><br />
+        <%= f.text_area :code %>
+      </div>
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+    <% end %>
     
     <div id="craftingField">
       <div class="item placeholder"></div>
@@ -96,16 +105,6 @@
     <pre class="map">loading...</pre>
 
     <pre><%= simple_format @readme %></pre>
-
-    <%= form_for(@warrior) do |f| %>
-      <div class="field">
-        <%= f.label :code %><br />
-        <%= f.text_area :code, disabled: true %>
-      </div>
-        <div class="actions">
-          <%= f.submit %>
-        </div>
-    <% end %>
 
     <p><%= simple_format @message %></p>
 

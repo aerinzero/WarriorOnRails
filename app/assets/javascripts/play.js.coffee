@@ -51,39 +51,43 @@ app = ->
         @refreshBank()
         @updateCodeBox()
 
+  @updateCodeBox = ->
+    console.log "updating code box"
+    $('textarea').val( @parseDomIntoRuby() )
+    $('textarea').text( @parseDomIntoRuby() )
+
   @parseDomIntoRuby = ->
     # check for holes
     if $('#craftingField').find('.item.placeholder').length>0
       console.log "empty elements remain..."
     # recursively parse each element
     root = $('#craftingField').children('.item')
-    @parseElementIntoRuby( root )
+    code = @parseElementIntoRuby( root )
+    code = "def play_turn(warrior)\n"+@indent( code )+"\nend"
+    code = "class Player\n"+@indent( code )+"\nend"
 
-  @updateCodeBox = ->
-    console.log "updating code box"
-    $('textarea').val( @parseDomIntoRuby() )
+  @indent = (input) ->
+    space = "  "
+    space+input.replace(/\n/g,"\n"+space);
 
   @parseElementIntoRuby = ( root ) ->
-    indent = (input) ->
-      space = "  "
-      space+input.replace(/\n/g,"\n"+space);
     code = ""
     if root.hasClass('conditional')
       condition = root.children('.conditionContainer').children('.condition')
       trueBlock = root.children('.path-true').children('.item')
       falseBlock = root.children('.path-false').children('.item')
-      code += "if ( "+@parseElementIntoRuby( condition )+" ) do\n"
-      code += indent @parseElementIntoRuby( trueBlock )
+      code += "if ( "+@parseElementIntoRuby( condition )+" )\n"
+      code += @indent @parseElementIntoRuby( trueBlock )
       code += "\nelse\n"
-      code += indent @parseElementIntoRuby( falseBlock )
+      code += @indent @parseElementIntoRuby( falseBlock )
       code += "\nend"
     else if root.hasClass('condition')
       if root.hasClass('condition-empty')
         code += "warrior.feel().empty?"
       else if root.hasClass('condition-enemy')
-        code += "warrior.feel().empty?"
+        code += "warrior.feel().enemy?"
       else if root.hasClass('condition-wall')
-        code += "warrior.feel().empty?"
+        code += "warrior.feel().wall?"
       else if root.hasClass('condition-lowHealth')
         code += "warrior.health < 5"
     else if root.hasClass('action')

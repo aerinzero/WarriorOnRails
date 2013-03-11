@@ -1,6 +1,5 @@
 class Player
-  def play_turn(warrior)
-    # add your code here
-    warrior.walk!
-  end
+def play_turn(warrior)
+
+end
 end
