@@ -31,51 +31,75 @@ $icon_width_buffer: 0px;
 $icon_height_buffer: 0px;
 
 .item {
-  width: 50px; 
-  height: 40px; 
-  padding: 5px; 
-  float: left; 
-  margin: 0 10px 10px 0; 
-  font-size: .9em; 
-  background-color: blue;
-  color: red; 
+  float: left;
+  margin: 0 auto;
 }
-.node {
-  width: 90px; 
-  height: 350px; 
+.item.conditional {
   padding: 5px; 
-  float: left; 
-  margin: 0 10px 10px 0; 
-  font-size: .9em; 
+  background-color: yellow;
+  color: green;
+
+  .conditionContainer {
+    width: 100%;
+    margin: 0 5px 5px 0;
+    .item {
+      float: center;
+    }
+  }
+  .path {
+    float: left;
+  }
+  .path-true {
+    border: 2px solid green;
+  }
+  .path-false {
+    border: 2px solid red;
+  }
+
+}
+.item.placeholder {
+  width: -$icon_width;
+  height: -$icon_height;
+  background-color: grey;
+  color: grey; 
+}
+
+#craftingField {
+  width: 100%; 
+  height: 100%; 
+  padding: 5px; 
+  float: left;  
   background-color: green;
-  color: red; 
 }
 .flag {
   width: 30px; 
   height: 30px;
   background-color: black;
   padding: 5px; 
-  margin: 0 10px 10px 0;
 }
 .flagHolder {
   height: -$icon_height + 25px;
 }
 .bank {
-  width: 350px; 
-  height: 120px; 
+  width: 150px; 
+  min-height: 350px; 
   padding: 5px; 
-  float: left; 
-  margin: 0 10px 10px 0; 
-  font-size: .9em; 
+  float: left;  
   background-color: orange;
-  color: red; 
+
+  .item:not(.placeholder) {
+    margin: 0 10px 10px 0;
+  } 
+  .item.conditional {
+
+  }
 }
 
 .icon {
   width: 0 - $icon_width;
   height: 0 - $icon_height;
   background-image:url('/assets/rpg_texture_pack0.png');
-  margin: auto;
+  background-color: blue;
 }
 
 .icon.blackberry {background-position: 00 * $icon_width + $icon_width_buffer  00 * $icon_height + $icon_height_buffer;}

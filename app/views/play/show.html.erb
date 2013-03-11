@@ -9,39 +9,82 @@
     </h2></p>
 
     
-    <div class="node">
-      <div class="flagHolder">
-        <div class="flag"><div class="icon radish"></div></div>
-      </div>
-      <div class="nodeitems">
-      </div>
-    </div>
-
-    
-    <div class="node">
-      <div class="flagHolder">
-        <div class="flag"><div class="icon cherry"></div></div>
-      </div>
-      <div class="nodeitems">
-        <div class="item"><div class="icon run"></div></div>
-        <div class="item"><div class="icon turn"></div></div>
-        <div class="item"><div class="icon attack"></div></div>
-      </div>
-    </div>
-
-    
-    <div class="node">
-      <div class="flagHolder">
-        <div class="flag"><div class="icon blackberry"></div></div>
-      </div>
-      <div class="nodeitems">
-      </div>
+    <div id="craftingField">
+      <div class="item placeholder"></div>
     </div>
 
     <div class="bank">
-      <div class="item"><div class="icon run"></div></div>
-      <div class="item"><div class="icon turn"></div></div>
-      <div class="item"><div class="icon attack"></div></div>
+      <ul>
+
+        <div>
+          <div class="bankItem">
+            <div class="item action"><div class="icon run"></div></div>
+          </div>
+          <p>
+          move forward one tile
+        </p>
+        </div>
+
+        <div>
+          <div class="bankItem">
+            <div class="item action"><div class="icon turn"></div></div>
+          </div>
+          turn right
+        </div>
+
+        <div>
+          <div class="bankItem">
+            <div class="item action"><div class="icon attack"></div></div>
+          </div>
+          attack forward
+        </div>
+
+        <div>
+          <div class="bankItem">
+            <div class="item conditional">
+              <div class="conditionContainer">
+                <div class="item placeholder"></div>
+              </div>
+              <div class="path path-true">
+                <div class="item placeholder"></div>
+              </div>
+              <div class="path path-false">
+                <div class="item placeholder"></div>
+              </div>
+            </div>
+          </div>
+          if statement structure
+        </div>
+
+        <div>
+          <div class="bankItem">
+            <div class="item condition"><div class="icon blackberry"></div></div>
+          </div>
+          if forward tile is empty
+        </div>
+
+        <div>
+          <div class="bankItem">
+          <div class="item condition"><div class="icon radish"></div></div>
+          </div>
+          if forward tile is enemy
+        </div>
+
+        <div>
+          <div class="bankItem">
+          <div class="item condition"><div class="icon acorn"></div></div>
+          </div>
+          if forward tile is wall
+        </div>
+
+        <div>
+          <div class="bankItem">
+          <div class="item condition"><div class="icon cherry"></div></div>
+          </div>
+          if low health
+        </div>
+
+      </ul>
     </div>
 
     <br />
