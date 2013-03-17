@@ -8,7 +8,7 @@
       <%= @warrior.name %> ( lvl: <%= @warrior.level %> )
     </h2></p>
 
-    <%= form_for(@warrior,remote: true) do |f| %>
+    <%= form_for(@warrior, remote: true, :format => :json) do |f| %>
       <div class="field">
         <%= f.label :code %><br />
         <%= f.text_area :code %>
@@ -116,20 +116,6 @@
 <script>
 
   window.frameJSON = <%= raw @frameJSON.to_json %>;
-  window.frameData = JSON.parse( window.frameJSON );
-
-  window.frameData.forEach(function(frame,index){
-
-    setTimeout( function(){
-      var formattedLevelMap;
-      formattedLevelMap = frame.levelMap;
-      formattedLevelMap = formattedLevelMap+"\n"+frame.actionsMessage;
-      formattedLevelMap = formattedLevelMap.split('\n').join('<br />');
-
-      $('.map').html(formattedLevelMap)
-    },300*index);
-
-  });
 
 </script>
 

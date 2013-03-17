@@ -9,8 +9,21 @@ class PlayController < ApplicationController
   #   # render :show, id: defaultWarrior.id
   # end
 
+  # for json response
+  def continue
+
+    @warrior = Warrior.find( params[:id] )
+    @warrior.update_attributes( params[:warrior] )
+
+    params[:warrior_id] = params[:id]
+    # render :show, id: params[:id]
+    self.show
+
+  end
+
   def show
     
+    # binding.pry
     @warrior = Warrior.find( params[:warrior_id] )
 
     @ios = StringIO.new
@@ -26,7 +39,12 @@ class PlayController < ApplicationController
     # @game.start
       RubyWarrior::UI.puts "Welcome to Ruby Warrior!\n"
       # @profile = RubyWarrior::Profile.load( ... )
+      if @warrior.data
         @game.profile = RubyWarrior::Profile.decode( @warrior.data )
+      else
+        @game.profile = RubyWarrior::Profile.new
+        @game.profile.warrior_name = @warrior.name
+      end
 
 
     # @game.play_normal_mode
@@ -52,7 +70,9 @@ class PlayController < ApplicationController
                 File.open(level.player_path + '/player.rb', 'w') do |f|
                   f << @warrior.code
                 end
-          # @game.profile.level_number += 1
+
+              @game.profile.level_number += 1 if @game.profile.level_number == 0
+
           # profile.save # this saves score and new abilities too
             # dont want to save the results from the first run until we have 'play_current_level' built out
             # @warrior.update_attributes(data:@game.profile.encode)
@@ -73,6 +93,7 @@ class PlayController < ApplicationController
           if current_level.passed?
             if @game.next_level.exists?
               RubyWarrior::UI.puts "Success! You have found the stairs."
+              @game.profile.level_number += 1
             else
               RubyWarrior::UI.puts "CONGRATULATIONS! You have climbed to the top of the tower and rescued the fair maiden Ruby."
               continue = false
@@ -92,15 +113,19 @@ class PlayController < ApplicationController
             end
           end
 
-          # if continue
-            # @warrior.
-      # end
       @warrior.data = @game.profile.encode
+      @warrior.level = @game.profile.level_number
       @warrior.save
 
     @message = @ios.string
     
-    render :show
+    responseJSON = {}
+    responseJSON[:frame_data] = @frameJSON
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: responseJSON }
+    end
   end
 
 end

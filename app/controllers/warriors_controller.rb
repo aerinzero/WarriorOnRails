@@ -25,6 +25,7 @@ class WarriorsController < ApplicationController
   # GET /warriors/new.json
   def new
     @warrior = Warrior.new
+    @warrior.code = "class Player\ndef play_turn(warrior)\n\nend\nend"
 
     respond_to do |format|
       format.html # new.html.erb
@@ -61,7 +62,7 @@ class WarriorsController < ApplicationController
     respond_to do |format|
       if @warrior.update_attributes(params[:warrior])
         format.html { redirect_to @warrior, notice: 'Warrior was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render :text => renderActionInOtherController(PlayController,:continue,params) }
       else
         format.html { render action: "edit" }
         format.json { render json: @warrior.errors, status: :unprocessable_entity }
@@ -79,5 +80,19 @@ class WarriorsController < ApplicationController
       format.html { redirect_to warriors_url }
       format.json { head :no_content }
     end
+  end
+
+  # obviously this is a bad idea
+  def renderActionInOtherController(controller,action,params)
+    controller.class_eval{
+      def params=(params); @params = params end
+      def params; @params end
+    }
+    c = controller.new
+    c.request = @_request
+    c.response = @_response
+    c.params = params
+    c.send(action)
+    c.response.body
   end
 end

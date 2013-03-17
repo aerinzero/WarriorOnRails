@@ -8,8 +8,30 @@
 
 
 app = ->
-
   window.app = @
+
+  # animation mechanism for map+etc 
+  @animateFrames = (frames) ->
+    frames.forEach (frame,index) ->
+      setTimeout (->
+        formattedLevelMap = frame.levelMap
+        formattedLevelMap = formattedLevelMap+"\n"+frame.actionsMessage
+        formattedLevelMap = formattedLevelMap.split('\n').join('<br />')
+        $('.map').html(formattedLevelMap)
+      ),300*index
+
+  # begin start-of-app frame animation
+  @animateFrames JSON.parse( window.frameJSON )
+
+  # setup update code response handler
+  $('form').bind 'ajax:complete', (evt,xhr,status) =>
+    response = JSON.parse(xhr.responseText)
+    frames = JSON.parse(response.frame_data)
+    @animateFrames frames
+
+  
+
+  # bank + tiles
 
   console.log "creating bank backup"
   @bankStock = $('.bank').clone()

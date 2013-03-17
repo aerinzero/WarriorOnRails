@@ -16,6 +16,7 @@ gem "rubywarrior", '0.1.3', path: "#{File.expand_path(__FILE__)}/../vendor/gems/
 group :assets do
 
   gem 'pry'
+  gem 'pry-debugger'
 
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
