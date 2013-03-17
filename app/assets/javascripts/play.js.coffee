@@ -54,7 +54,9 @@ app = ->
   $('.item:not(.item.placeholder)').draggable( revert: "invalid" )
   
   @setupPlaceHolders = ->
-    $('.item.placeholder:not(.conditionContainer .item.placeholder)').droppable
+    # action items
+    # $('.item.placeholder:not(.conditionContainer .item.placeholder)').droppable
+    $('.item:not(.conditionContainer .item):not(.conditional)').droppable
       accept: '.item:not(.condition)'
       drop: (event, ui) =>
         target = $(event.target)
@@ -63,6 +65,7 @@ app = ->
         token.attr('style','')
         @refreshBank()
         @updateCodeBox()
+    # conditionals
     $('.conditionContainer .item.placeholder').droppable
       accept: '.item.condition'
       drop: (event, ui) =>
@@ -84,9 +87,24 @@ app = ->
       console.log "empty elements remain..."
     # recursively parse each element
     root = $('#craftingField').children('.item')
-    code = @parseElementIntoRuby( root )
-    code = "def play_turn(warrior)\n"+@indent( code )+"\nend"
+    
+    code = ""
+
+    playTurnCode = "@actionQueue ||= []"+"\n"
+    playTurnCode += "if @actionQueue.length==0"+"\n"
+    playTurnCode += @indent("self.next_actions(warrior)")+"\n"
+    playTurnCode += "end"+"\n"
+    playTurnCode += "@actionQueue.pop.call(warrior)"
+    code += "def play_turn(warrior)\n"+@indent( playTurnCode )+"\nend"
+    code += "\n\n"
+
+    nextActionCode = ""
+    # nextActionCode += "binding.pry\n"
+    nextActionCode += @parseElementIntoRuby( root )
+    code += "def next_actions(warrior)\n"+@indent( nextActionCode )+"\nend"
+
     code = "class Player\n"+@indent( code )+"\nend"
+    code = "require 'pry'\n\n"+ code
 
   @indent = (input) ->
     space = "  "
@@ -114,61 +132,16 @@ app = ->
         code += "warrior.health < 5"
     else if root.hasClass('action')
       if root.hasClass('action-move')
-        code += "warrior.walk!"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.walk!}"
       else if root.hasClass('action-turn')
-        code += "warrior.pivot!"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.pivot!}"
       else if root.hasClass('action-attack')
-        code += "warrior.attack!"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.attack!}"
+      else if root.hasClass('action-heal')
+        code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"+"\n"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}"
     return code
 
   @setupPlaceHolders()
-
-
-
-
-# app = ->
-
-#   @updateNodeLength = (node) ->
-#     flag = 40
-#     childHeight = 60
-#     buffer = 5
-#     children = node.find('.item')
-#     childCount = children.length
-#     node.height( flag + childHeight * childCount + buffer * childCount )
-
-#   $('.node .nodeitems').each (index,node) => @updateNodeLength( $(node) )
-
-#   $('.node .nodeitems').sortable(
-#     # items: '.item'
-#     connectWith: '.node .nodeitems'
-#     receive: (event, ui) =>
-#       if ui.item.hasClass('flag')
-#         ui.item.removeClass('flag').addClass('item')
-#       @updateNodeLength $(event.target)
-#     remove: (event, ui) =>
-#       @updateNodeLength $(event.target)
-#     out: (event, ui) =>
-#       @updateNodeLength $(event.target)
-#   ).disableSelection()
-
-#   $( '.node .flagHolder' ).sortable(
-#     # items: '.flag'
-#     connectWith: '.node .nodeitems'
-#     revert: true
-#     remove: (event, ui) =>
-#       # replace original
-#       ui.item.clone().appendTo( event.target )
-
-#   ).disableSelection()
-
-#   $('.bank').sortable(
-#     connectWith: '.node .nodeitems'
-#     revert: true
-#     remove: (event, ui) =>
-#       # replace original
-#       ui.item.clone().appendTo( event.target )
-#   ).disableSelection()
-
-#   $('.node,.bank').draggable()
 
 $( app )

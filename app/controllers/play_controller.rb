@@ -22,8 +22,7 @@ class PlayController < ApplicationController
   end
 
   def show
-    
-    # binding.pry
+
     @warrior = Warrior.find( params[:warrior_id] )
 
     @ios = StringIO.new

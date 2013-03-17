@@ -84,10 +84,10 @@ class WarriorsController < ApplicationController
 
   # obviously this is a bad idea
   def renderActionInOtherController(controller,action,params)
-    controller.class_eval{
-      def params=(params); @params = params end
-      def params; @params end
-    }
+    # controller.class_eval{
+    #   def params=(params); @params = params end
+    #   def params; @params end
+    # }
     c = controller.new
     c.request = @_request
     c.response = @_response
