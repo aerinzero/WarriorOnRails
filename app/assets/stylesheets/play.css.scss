@@ -34,6 +34,7 @@ $icon_height_buffer: 0px;
   float: left;
   margin: 0 auto;
 }
+
 .item.conditional {
   padding: 5px; 
   background-color: yellow;
@@ -55,8 +56,19 @@ $icon_height_buffer: 0px;
   .path-false {
     border: 2px solid red;
   }
-
 }
+
+.item.stack {
+  padding: 5px; 
+  background-color: yellow;
+  color: green;
+
+  .path {
+    float: left;
+    border: 2px solid purple;
+  }
+}
+
 .item.placeholder {
   width: -$icon_width;
   height: -$icon_height;
@@ -112,6 +124,7 @@ $icon_height_buffer: 0px;
 .icon.turn       {background-position: 01 * $icon_width + $icon_width_buffer  26 * $icon_height + $icon_height_buffer;}
 .icon.attack     {background-position: 00 * $icon_width + $icon_width_buffer  25 * $icon_height + $icon_height_buffer;}
 .icon.heal       {background-position: 07 * $icon_width + $icon_width_buffer  22 * $icon_height + $icon_height_buffer;}
+.icon.retreat    {background-position: 06 * $icon_width + $icon_width_buffer  22 * $icon_height + $icon_height_buffer;}
 
 /* begin map */
 

@@ -6,14 +6,21 @@ class Player
     if @actionQueue.length==0
       self.next_actions(warrior)
     end
-    @actionQueue.pop.call(warrior)
+    if @actionQueue.length>0
+      @actionQueue.pop.call(warrior)
+    end
   end
   
   def next_actions(warrior)
     if ( warrior.feel().empty? )
       @actionQueue.push Proc.new {|warrior| warrior.walk!}
     else
-      if ( warrior.health < 10 )
+      if ( warrior.health < 5 )
+        @actionQueue.push Proc.new {|warrior| warrior.rest!}
+        @actionQueue.push Proc.new {|warrior| warrior.rest!}
+        @actionQueue.push Proc.new {|warrior| warrior.rest!}
+        @actionQueue.push Proc.new {|warrior| warrior.rest!}
+        @actionQueue.push Proc.new {|warrior| warrior.rest!}
         @actionQueue.push Proc.new {|warrior| warrior.rest!}
         @actionQueue.push Proc.new {|warrior| warrior.rest!}
         @actionQueue.push Proc.new {|warrior| warrior.rest!}

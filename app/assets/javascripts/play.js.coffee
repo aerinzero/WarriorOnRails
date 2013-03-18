@@ -12,6 +12,11 @@ app = ->
 
   # animation mechanism for map+etc 
   @animateFrames = (frames) ->
+    # ghetto clear timeout
+    i = 0
+    clearTimeout i++ while i < 100000
+
+    # build html for frames
     frames.forEach (frame,index) ->
       setTimeout (->
         map = JSON.parse frame.levelMap
@@ -25,7 +30,7 @@ app = ->
 
         message = frame.actionsMessage.split('\n').join('<br />')
         $('#actionsMessage').html(message)
-      ),300*index
+      ),500*index
 
   # begin start-of-app frame animation
   @animateFrames JSON.parse( window.frameJSON )
@@ -63,7 +68,7 @@ app = ->
   @setupPlaceHolders = ->
     # action items
     # $('.item.placeholder:not(.conditionContainer .item.placeholder)').droppable
-    $('.item:not(.conditionContainer .item):not(.conditional)').droppable
+    $('.item:not(.conditionContainer .item):not(.macro)').droppable
       accept: '.item:not(.condition)'
       drop: (event, ui) =>
         target = $(event.target)
@@ -73,8 +78,8 @@ app = ->
         @refreshBank()
         @updateCodeBox()
     # conditionals
-    $('.conditionContainer .item.placeholder').droppable
-      accept: '.item.condition'
+    $('.conditionContainer .item').droppable
+      accept: '.item.condition:not(.conditionContainer .item)'
       drop: (event, ui) =>
         target = $(event.target)
         token = ui.draggable
@@ -96,12 +101,15 @@ app = ->
     root = $('#craftingField').children('.item')
     
     code = ""
-
+    # building warrior boilerplate
     playTurnCode = "@actionQueue ||= []"+"\n"
     playTurnCode += "if @actionQueue.length==0"+"\n"
     playTurnCode += @indent("self.next_actions(warrior)")+"\n"
     playTurnCode += "end"+"\n"
-    playTurnCode += "@actionQueue.pop.call(warrior)"
+    playTurnCode += "if @actionQueue.length>0"+"\n"
+    playTurnCode += @indent("@actionQueue.pop.call(warrior)")+"\n"
+    playTurnCode += "end"
+
     code += "def play_turn(warrior)\n"+@indent( playTurnCode )+"\nend"
     code += "\n\n"
 
@@ -128,6 +136,11 @@ app = ->
       code += "\nelse\n"
       code += @indent @parseElementIntoRuby( falseBlock )
       code += "\nend"
+    else if root.hasClass('stack')
+      paths = root.children('.path')
+      paths.toArray().reverse().forEach (path,index) =>
+        code += "\n" if index>0
+        code += @parseElementIntoRuby $(path).children()
     else if root.hasClass('condition')
       if root.hasClass('condition-empty')
         code += "warrior.feel().empty?"
@@ -145,12 +158,13 @@ app = ->
       else if root.hasClass('action-attack')
         code += "@actionQueue.push Proc.new {|warrior| warrior.attack!}"
       else if root.hasClass('action-heal')
-        code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"+"\n"
-        code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"+"\n"
-        code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"+"\n"
-        code += "@actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}"+"\n"
-        code += "@actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}"+"\n"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"
+      else if root.hasClass('action-retreat')
         code += "@actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}"
+    else
+      # should never reach here with root.length>0
+      if root.length>0 && !root.hasClass('placeholder')
+        debugger 
     return code
 
   @setupPlaceHolders()
