@@ -33,7 +33,7 @@ app = ->
       ),500*index
 
   # begin start-of-app frame animation
-  @animateFrames JSON.parse( window.frameJSON )
+  @animateFrames window.frameData
 
   # setup update code response handler
   $('form').bind 'ajax:complete', (evt,xhr,status) =>
@@ -149,7 +149,7 @@ app = ->
       else if root.hasClass('condition-wall')
         code += "warrior.feel().wall?"
       else if root.hasClass('condition-lowHealth')
-        code += "warrior.health < 5"
+        code += "warrior.health < 10"
     else if root.hasClass('action')
       if root.hasClass('action-move')
         code += "@actionQueue.push Proc.new {|warrior| warrior.walk!}"

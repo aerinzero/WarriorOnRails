@@ -1,3 +1,11 @@
+
+<script>
+
+  window.frameData = <%= raw @gameFrames.to_json %>;
+
+</script>
+<%= javascript_include_tag "play/show" %>
+
 <div class="content">
 
   <div class="leftPanel">
@@ -143,12 +151,6 @@
   </div>
 
 </div>
-
-<script>
-
-  window.frameJSON = <%= raw @frameJSON.to_json %>;
-
-</script>
 
 
   
