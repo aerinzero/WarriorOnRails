@@ -158,6 +158,8 @@ app = ->
       else if root.hasClass('action-attack')
         code += "@actionQueue.push Proc.new {|warrior| warrior.attack!}"
       else if root.hasClass('action-heal')
+        code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"+"\n"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"+"\n"
         code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"
       else if root.hasClass('action-retreat')
         code += "@actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}"

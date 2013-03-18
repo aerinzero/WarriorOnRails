@@ -12,23 +12,9 @@ class Player
   end
   
   def next_actions(warrior)
-    if ( warrior.health < 10 )
-      @actionQueue.push Proc.new {|warrior| warrior.rest!}
-      @actionQueue.push Proc.new {|warrior| warrior.rest!}
-      @actionQueue.push Proc.new {|warrior| warrior.rest!}
-      @actionQueue.push Proc.new {|warrior| warrior.rest!}
-      @actionQueue.push Proc.new {|warrior| warrior.rest!}
-      @actionQueue.push Proc.new {|warrior| warrior.rest!}
-      @actionQueue.push Proc.new {|warrior| warrior.rest!}
-      @actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}
-      @actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}
-      @actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}
-    else
-      if ( warrior.feel().empty? )
-        @actionQueue.push Proc.new {|warrior| warrior.walk!}
-      else
-        @actionQueue.push Proc.new {|warrior| warrior.attack!}
-      end
-    end
+    @actionQueue.push Proc.new {|warrior| warrior.attack!}
+    @actionQueue.push Proc.new {|warrior| warrior.rest!}
+    @actionQueue.push Proc.new {|warrior| warrior.rest!}
+    @actionQueue.push Proc.new {|warrior| warrior.rest!}
   end
 end
