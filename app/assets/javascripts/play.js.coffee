@@ -14,10 +14,17 @@ app = ->
   @animateFrames = (frames) ->
     frames.forEach (frame,index) ->
       setTimeout (->
-        formattedLevelMap = frame.levelMap
-        formattedLevelMap = formattedLevelMap+"\n"+frame.actionsMessage
-        formattedLevelMap = formattedLevelMap.split('\n').join('<br />')
-        $('.map').html(formattedLevelMap)
+        map = JSON.parse frame.levelMap
+        mapHTML = ""
+        map.forEach (row) ->
+          mapHTML+="<div class='row'>"
+          row.forEach (tile) ->
+            mapHTML+="<div class='tile #{tile.type}'></div>"
+          mapHTML+="</div>"
+        $('#map').html(mapHTML)
+
+        message = frame.actionsMessage.split('\n').join('<br />')
+        $('#actionsMessage').html(message)
       ),300*index
 
   # begin start-of-app frame animation
@@ -139,6 +146,10 @@ app = ->
         code += "@actionQueue.push Proc.new {|warrior| warrior.attack!}"
       else if root.hasClass('action-heal')
         code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"+"\n"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"+"\n"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.rest!}"+"\n"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}"+"\n"
+        code += "@actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}"+"\n"
         code += "@actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}"
     return code
 

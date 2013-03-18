@@ -40,6 +40,7 @@ class PlayController < ApplicationController
       # @profile = RubyWarrior::Profile.load( ... )
       if @warrior.data
         @game.profile = RubyWarrior::Profile.decode( @warrior.data )
+        @game.profile.level_number = @warrior.level
       else
         @game.profile = RubyWarrior::Profile.new
         @game.profile.warrior_name = @warrior.name

@@ -67,7 +67,7 @@ module RubyWarrior
         
         # frameNum = (n+1).to_s.rjust(3, '0')
         
-        levelMap = @floor.character
+        levelMap = @floor.tile_map.to_json
 
         RubyWarrior::Config.out_stream = StringIO.new      
         @floor.units.each { |unit| unit.prepare_turn }

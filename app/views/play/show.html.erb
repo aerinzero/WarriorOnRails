@@ -9,13 +9,13 @@
     </h2></p>
 
     <%= form_for(@warrior, remote: true, :format => :json) do |f| %>
-      <div class="field">
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+      <div class="field" style="display: none;">
         <%= f.label :code %><br />
         <%= f.text_area :code %>
       </div>
-        <div class="actions">
-          <%= f.submit %>
-        </div>
     <% end %>
     
     <div id="craftingField">
@@ -109,7 +109,8 @@
 
   <div class="rightPanel">
 
-    <pre class="map">loading...</pre>
+    <pre id="map">loading...</pre>
+    <pre id="actionsMessage">loading...</pre>
 
     <pre><%= simple_format @readme %></pre>
 

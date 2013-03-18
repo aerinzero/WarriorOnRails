@@ -59,6 +59,69 @@ module RubyWarrior
       rows << " " + ("-" * @width)
       rows.join("\n") + "\n"
     end
+
+    def tile_map
+      warrior = {type:'player'}
+      thick_slime = {type:'thickslime'}
+      small_slime = {type:'smallslime'}
+      archer = {type:'archer'}
+      floor = {type:'floor'}
+      wall = {type:'wall'}
+      stairs = {type:'stairs'}
+
+      rows = []
+
+      # add all-wall top row
+      top_row = []
+      (@width+2).times do |x|
+        top_row << wall
+      end
+      rows << top_row
+
+      @height.times do |y|
+        row = []
+        row << wall
+        @width.times do |x|
+          square = space(x, y)
+          # if square.wall?
+          # elsif square.warrior?
+          # elsif square.golem?
+          # elsif square.player?
+          # elsif square.enemy?
+          # elsif square.captive?
+          # elsif square.empty?
+          # elsif square.stairs?
+          tile = nil
+          case
+          when square.unit.class == RubyWarrior::Units::Warrior
+            tile = warrior
+          when square.unit.class == RubyWarrior::Units::Sludge
+            tile = small_slime
+          when square.unit.class == RubyWarrior::Units::ThickSludge
+            tile = thick_slime
+          when square.unit.class == RubyWarrior::Units::Archer
+            tile = archer
+          else
+            if square.stairs?
+              tile = stairs
+            else
+              tile = floor
+            end
+          end
+
+          row << tile
+        end
+        row << wall
+        rows << row
+      end
+
+      # add all-wall bottom row
+      bottom_row = []
+      (@width+2).times do |x|
+        bottom_row << wall
+      end
+      rows << bottom_row
+    end
     
     def unique_units
       unique_units = []

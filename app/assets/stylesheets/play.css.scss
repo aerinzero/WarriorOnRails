@@ -2,7 +2,7 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.map {
+#actionsMessage {
   font-family: "Lucida Console", Monaco, monospace;
   font-size:x-large;
 }
@@ -113,3 +113,47 @@ $icon_height_buffer: 0px;
 .icon.attack     {background-position: 00 * $icon_width + $icon_width_buffer  25 * $icon_height + $icon_height_buffer;}
 .icon.heal       {background-position: 07 * $icon_width + $icon_width_buffer  22 * $icon_height + $icon_height_buffer;}
 
+/* begin map */
+
+$icon_width: -32px;
+$icon_height: -32px;
+
+#map {
+  .row {
+    height: 0 - $icon_height;
+
+    .tile {
+      background-color: pink;
+      height: 50px;
+      width: 50px;
+      display: block;
+      float: left;
+      width: 0 - $icon_width;
+      height: 0 - $icon_height;
+      
+    }
+    .tile.player {
+      background-color: grey; 
+      background-image:url('/assets/charsheet0.png');
+      background-position: 02 * $icon_width + $icon_width_buffer  02 * $icon_height + $icon_height_buffer;
+    }
+    .tile.thickslime {
+      background-image:url('/assets/bigslime.jpg');
+    }
+    .tile.smallslime {
+      background-color: grey;
+      background-image:url('/assets/smallslime.png');
+    }
+    .tile.archer {
+      background-color: grey; 
+      background-image:url('/assets/archer.png');
+    }
+    .tile.stairs {
+      background-image:url('/assets/stairs-down0.png');
+    }
+
+    .tile.wall  { background-color: black; }
+    .tile.floor { background-color: grey; }
+
+  }
+}

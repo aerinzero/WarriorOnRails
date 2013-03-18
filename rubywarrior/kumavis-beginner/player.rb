@@ -13,9 +13,13 @@ class Player
     if ( warrior.feel().empty? )
       @actionQueue.push Proc.new {|warrior| warrior.walk!}
     else
-      if ( warrior.health < 5 )
+      if ( warrior.health < 10 )
         @actionQueue.push Proc.new {|warrior| warrior.rest!}
-@actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}
+        @actionQueue.push Proc.new {|warrior| warrior.rest!}
+        @actionQueue.push Proc.new {|warrior| warrior.rest!}
+        @actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}
+        @actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}
+        @actionQueue.push Proc.new {|warrior| warrior.walk!(:backward)}
       else
         @actionQueue.push Proc.new {|warrior| warrior.attack!}
       end
