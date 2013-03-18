@@ -46,6 +46,25 @@ class PlayController < ApplicationController
         @game.profile.warrior_name = @warrior.name
       end
 
+      self.play
+
+      @warrior.data = @game.profile.encode
+      @warrior.level = @game.profile.level_number
+      @warrior.save
+
+    @message = @ios.string
+    
+    responseJSON = {}
+    responseJSON[:frame_data] = @gameFrames.to_json
+
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: responseJSON }
+    end
+
+  end
+  
+  def play
 
     # @game.play_normal_mode
       # if @game.current_level.number.zero?
@@ -86,14 +105,20 @@ class PlayController < ApplicationController
 
           RubyWarrior::UI.puts "Starting Level #{current_level.number}"
 
-          @gameFrames = current_level.play
-
-          @frameJSON = @gameFrames.to_json
+          @gameFrames ||= []
+          @gameFrames += current_level.play
 
           if current_level.passed?
             if @game.next_level.exists?
               RubyWarrior::UI.puts "Success! You have found the stairs."
+              
+              RubyWarrior::Config.skip_input = false
+              profile = @game.profile
               @game.profile.level_number += 1
+              @game = RubyWarrior::Game.new
+              @game.profile = profile
+              self.play
+
             else
               RubyWarrior::UI.puts "CONGRATULATIONS! You have climbed to the top of the tower and rescued the fair maiden Ruby."
               continue = false
@@ -113,19 +138,7 @@ class PlayController < ApplicationController
             end
           end
 
-      @warrior.data = @game.profile.encode
-      @warrior.level = @game.profile.level_number
-      @warrior.save
-
-    @message = @ios.string
-    
-    responseJSON = {}
-    responseJSON[:frame_data] = @frameJSON
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: responseJSON }
-    end
   end
+
 
 end
