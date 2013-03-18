@@ -161,6 +161,14 @@ $icon_height: -32px;
       background-color: grey; 
       background-image:url('/assets/archer.png');
     }
+    .tile.wizard {
+      background-color: grey; 
+      background-image:url('/assets/wizard.png');
+    }
+    .tile.captive {
+      background-color: grey; 
+      background-image:url('/assets/captive.gif');
+    }
     .tile.stairs {
       background-image:url('/assets/stairs-down0.png');
     }

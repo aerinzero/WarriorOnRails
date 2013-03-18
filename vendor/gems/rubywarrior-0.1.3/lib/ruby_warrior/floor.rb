@@ -65,6 +65,8 @@ module RubyWarrior
       thick_slime = {type:'thickslime'}
       small_slime = {type:'smallslime'}
       archer = {type:'archer'}
+      wizard = {type:'wizard'}
+      captive = {type:'captive'}
       floor = {type:'floor'}
       wall = {type:'wall'}
       stairs = {type:'stairs'}
@@ -101,6 +103,10 @@ module RubyWarrior
             tile = thick_slime
           when square.unit.class == RubyWarrior::Units::Archer
             tile = archer
+          when square.unit.class == RubyWarrior::Units::Captive
+            tile = captive
+          when square.unit.class == RubyWarrior::Units::Wizard
+            tile = wizard
           else
             if square.stairs?
               tile = stairs
