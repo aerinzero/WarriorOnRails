@@ -1,13 +1,17 @@
 // Place all the styles related to the Play controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+html {
+  height: 100%;
+}
 
-#actionsMessage {
-  font-family: monospace;
-  font-size:x-large;
+body {
+  margin: 0;
+  height: 100%;
 }
 
 .content {
+  height: 100%;
   display: block;  
   background-color: rgb(138, 110, 98);
 }
@@ -34,7 +38,11 @@
   width: 100%;
   color: #FD705C;
   font-family: fantasy;
-  font-size: 3em;
+
+  h1 {
+    font-size: 70px;
+  }
+
 }
 
 #craftingContainer {
@@ -62,18 +70,36 @@
     border-radius: 10px;
     border-image: none;
     background-color: #FD705C;
+    font-size: 1em;
+    font-family: monospace;
   }
 }
 
 // == Right Panel ==
+
+#actionsMessage {
+  
+}
+
+#codeView {
+  pre {
+    background-color: #9EB1A3;
+  }
+}
 
 .content_panel {
   background-image: url(http://i.imgur.com/VREJ6.png);
   padding: 20px;
   background-color: grey;
 
+
   &.text {
     background-image: none;
+    
+    p {
+      font-family: monospace;
+      font-size: x-large;
+    }
   }
 
   &#actionsMessage {
@@ -97,7 +123,13 @@ $icon_height: -32px;
 $icon_width_buffer: 0px;
 $icon_height_buffer: 0px;
 
+#mapContainer {
+  margin: 0 auto;
+  width: 50%;
+}
+
 #map {
+
   .row {
     height: 0 - $icon_height;
 
@@ -145,7 +177,6 @@ $icon_height_buffer: 0px;
   }
 }
 
-
 /* begin scratchStone */
 
 $icon_width: -34px;
@@ -176,7 +207,7 @@ $icon_height_buffer: 0px;
     float: left;
   }
   .path-true {
-    border: 2px solid #D8F15E;
+    border: 2px solid green;
   }
   .path-false {
     border: 2px solid red;
@@ -191,7 +222,7 @@ $icon_height_buffer: 0px;
 
   .path {
     float: left;
-    border: 2px solid green;
+    border: 2px solid orange;
   }
 }
 
@@ -218,7 +249,7 @@ $icon_height_buffer: 0px;
   height: 100px;
 
   .item:not(.placeholder) {
-    margin: 0 10px 10px 0;
+    margin: 5px;
   } 
   .item.conditional {
 
@@ -226,6 +257,7 @@ $icon_height_buffer: 0px;
 }
 
 .icon {
+  border-radius:  5px;
   width: 0 - $icon_width;
   height: 0 - $icon_height;
   background-image:url('/assets/rpg_texture_pack0.png');

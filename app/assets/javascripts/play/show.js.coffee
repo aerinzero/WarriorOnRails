@@ -28,7 +28,7 @@ app = ->
           mapHTML+="</div>"
         $('#map').html(mapHTML)
 
-        message = frame.actionsMessage.split('\n').join('<br />')
+        message = "<p>"+frame.actionsMessage.split('\n').join('<br />')+"</p>"
         $('#actionsMessage').html(message)
       ),500*index
 
@@ -62,7 +62,7 @@ app = ->
     $('.bank .item:not(.item.placeholder)').draggable( revert: "invalid" )
     @setupPlaceHolders()
 
-  $('.bank').draggable()
+  # $('.bank').draggable()
   $('.item:not(.item.placeholder)').draggable( revert: "invalid" )
   
   @setupPlaceHolders = ->
@@ -91,7 +91,7 @@ app = ->
   @updateCodeBox = ->
     console.log "updating code box"
     $('textarea').val( @parseDomIntoRuby() )
-    $('textarea').text( @parseDomIntoRuby() )
+    $('textarea,#codeView pre').text( @parseDomIntoRuby() )
 
   @parseDomIntoRuby = ->
     # check for holes
@@ -169,6 +169,8 @@ app = ->
         debugger 
     return code
 
+  # init app
   @setupPlaceHolders()
+  @refreshBank()
 
 $( app )

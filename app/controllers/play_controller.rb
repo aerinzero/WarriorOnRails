@@ -74,9 +74,14 @@ class PlayController < ApplicationController
             # @game.next_level.generate_player_files
               @game.next_level.load_level
               playerGenerator = RubyWarrior::PlayerGenerator.new(@game.next_level)
-              @readme = playerGenerator.read_template(playerGenerator.templates_path + '/README.erb')
-              # playerGenerator.generate
+              # @readme = playerGenerator.read_template(playerGenerator.templates_path + '/README.erb')
+              level = playerGenerator.previous_level
+              if level.number == 0
                 level = playerGenerator.level
+              end
+              @readme = ERB.new(File.read(playerGenerator.templates_path+'/README.erb'), nil, '-').result(binding)
+              # playerGenerator.generate
+                
                 # if level.number == 1
                 #   FileUtils.mkdir_p(level.player_path) unless File.exists? level.player_path
                 #   # FileUtils.cp(playerGenerator.templates_path + '/player.rb', level.player_path) unless File.exists? (level.player_path + '/player.rb')
