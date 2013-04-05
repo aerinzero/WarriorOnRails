@@ -8,58 +8,80 @@
 
 <div class="content">
 
-  <div class="leftPanel">
+  <div class="panel panel_left">
 
-    <h1>Play RubyWarrior</h1>
-    <br />
-    <p><h2>
-      <%= @warrior.name %> ( lvl: <%= @warrior.level %> )
-    </h2></p>
-
-    
-    
-    <div id="craftingField">
-      <div class="item placeholder"></div>
+    <div class="content_panel" id="title">
+      <h1>RubyWarrior</h1>
     </div>
 
-    <div class="bank">
+    
+    
+    <div class="content_panel" id="craftingContainer">
+      <div class="content_panel" id="craftingField">
+
+        <div class="macro item conditional">
+          <div class="conditionContainer">
+            <div class="item placeholder"></div>
+          </div>
+          <div class="path path-true">
+            <div class="item placeholder"></div>
+          </div>
+          <div class="path path-false">
+            <div class="item placeholder"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="content_panel" style="width:100%;">
+      <%= form_for(@warrior, remote: true, :format => :json) do |f| %>
+        <div class="actions">
+          <%= f.submit %>
+        </div>
+        <div class="field" style="display: none;">
+          <%= f.label :code %><br />
+          <%= f.text_area :code %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="bank content_panel">
       <ul>
 
         <div>
           <div class="bankItem">
             <div class="item action action-move"><div class="icon run"></div></div>
           </div>
-          <p>
-          move forward one tile
-        </p>
+          <!-- move forward one tile -->
         </div>
 
         <div>
           <div class="bankItem">
             <div class="item action action-turn"><div class="icon turn"></div></div>
           </div>
-          turn right
+          <!-- turn right -->
         </div>
 
         <div>
           <div class="bankItem">
             <div class="item action action-attack"><div class="icon attack"></div></div>
           </div>
-          attack forward
+          <!-- attack forward -->
         </div>
 
         <div>
           <div class="bankItem">
             <div class="item action action-heal"><div class="icon heal"></div></div>
           </div>
-          rest 3 turns, healing 2 each
+          <!-- rest 3 turns, healing 2 each -->
         </div>
 
         <div>
           <div class="bankItem">
             <div class="item action action-retreat"><div class="icon retreat"></div></div>
           </div>
-          retreat
+          <!-- retreat -->
         </div>
 
         <div>
@@ -76,7 +98,7 @@
               </div>
             </div>
           </div>
-          if statement structure
+          <!-- if statement structure -->
         </div>
 
         <div>
@@ -90,63 +112,57 @@
               </div>
             </div>
           </div>
-          action stack
+          <!-- action stack -->
         </div>
 
         <div>
           <div class="bankItem">
             <div class="item condition condition-empty"><div class="icon blackberry"></div></div>
           </div>
-          if forward tile is empty
+            <!-- if forward tile is empty -->
+          </span>
         </div>
 
         <div>
           <div class="bankItem">
           <div class="item condition condition-enemy"><div class="icon radish"></div></div>
           </div>
-          if forward tile is enemy
+            <!-- if forward tile is enemy -->
+          </span>
         </div>
 
         <div>
           <div class="bankItem">
           <div class="item condition condition-wall"><div class="icon acorn"></div></div>
           </div>
-          if forward tile is wall
+            <!-- if forward tile is wall -->
+          </span>
         </div>
 
         <div>
           <div class="bankItem">
           <div class="item condition condition-lowHealth"><div class="icon cherry"></div></div>
           </div>
-          if low health
+            <!-- if low health -->
+          </span>
         </div>
 
       </ul>
     </div>
 
-    <br />
-
-    <%= form_for(@warrior, remote: true, :format => :json) do |f| %>
-      <div class="actions">
-        <%= f.submit %>
-      </div>
-      <div class="field" style-debug="display: none;">
-        <%= f.label :code %><br />
-        <%= f.text_area :code %>
-      </div>
-    <% end %>
+    <div class="content_panel" style="width:100%; height: 60px"></div>
 
   </div>
 
-  <div class="rightPanel">
+  <div class="panel panel_right">
 
-    <pre id="map">loading...</pre>
-    <pre id="actionsMessage">loading...</pre>
-
-    <pre><%= simple_format @readme %></pre>
-
-    <p><%= simple_format @message %></p>
-
+    <div class="content_panel" id="map">loading...</div>
+    <div class="content_panel text" id="actionsMessage">loading...</div>
+    <div class="content_panel"></div>
+    <div class="content_panel text" id="readMe"><%= simple_format @readme %></div>
+    <div class="content_panel"></div>
+    <div class="content_panel text" id="message"><%= simple_format @message %></div>
+    <div class="content_panel"></div>
 
   </div>
 

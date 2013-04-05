@@ -3,133 +3,99 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #actionsMessage {
-  font-family: "Lucida Console", Monaco, monospace;
+  font-family: monospace;
   font-size:x-large;
 }
 
 .content {
   display: block;  
+  background-color: rgb(138, 110, 98);
 }
 
-.leftPanel {
+.panel {
+
+  padding:  50px;
   display: inline-block;
   vertical-align:top;
-  width: 49%;
+  width: 40%;
+
+  &.panel-left {
+
+  }
+
+  &.panel-right {
+    
+  }
+
 }
 
-.rightPanel {
-  display: inline-block;
-  vertical-align:top;
-  width: 49%;
+// == Left Panel ==
+#title {
+  width: 100%;
+  color: #FD705C;
+  font-family: fantasy;
+  font-size: 3em;
 }
 
-/* begin scratchStone */
+#craftingContainer {
+  min-height: 250px;
+  background-image: none;
+  background-color: #9EB1A3;
+  width: 100%;
 
-$icon_width: -34px;
-$icon_height: -34px;
-$icon_width_buffer: 0px;
-$icon_height_buffer: 0px;
+    #craftingField {
+    background-image: none;
+    background-color: rgba(0,0,0,0);
+    display: table;
+    margin: 0 auto;
+    
+  }
+}
 
-.item {
-  float: left;
+.actions {
   margin: 0 auto;
-}
+  display: table;
 
-.item.conditional {
-  padding: 5px; 
-  background-color: yellow;
-  color: green;
-
-  .conditionContainer {
-    width: 100%;
-    margin: 0 5px 5px 0;
-    .item {
-      float: center;
-    }
-  }
-  .path {
-    float: left;
-  }
-  .path-true {
-    border: 2px solid green;
-  }
-  .path-false {
-    border: 2px solid red;
+  input {
+    // color: buttontext;
+    padding: 5px;
+    border-radius: 10px;
+    border-image: none;
+    background-color: #FD705C;
   }
 }
 
-.item.stack {
-  padding: 5px; 
-  background-color: yellow;
-  color: green;
+// == Right Panel ==
 
-  .path {
-    float: left;
-    border: 2px solid purple;
-  }
-}
-
-.item.placeholder {
-  width: -$icon_width;
-  height: -$icon_height;
+.content_panel {
+  background-image: url(http://i.imgur.com/VREJ6.png);
+  padding: 20px;
   background-color: grey;
-  color: grey; 
-}
 
-#craftingField {
-  width: 100%; 
-  height: 100%; 
-  padding: 5px; 
-  float: left;  
-  background-color: green;
-}
-.flag {
-  width: 30px; 
-  height: 30px;
-  background-color: black;
-  padding: 5px; 
-}
-.flagHolder {
-  height: -$icon_height + 25px;
-}
-.bank {
-  width: 150px; 
-  min-height: 350px; 
-  padding: 5px; 
-  float: left;  
-  background-color: orange;
+  &.text {
+    background-image: none;
+  }
 
-  .item:not(.placeholder) {
-    margin: 0 10px 10px 0;
-  } 
-  .item.conditional {
+  &#actionsMessage {
+    min-height: 150px;
+  }
+
+  &#readMe {
+
+  }
+
+  &#message {
 
   }
 }
 
-.icon {
-  width: 0 - $icon_width;
-  height: 0 - $icon_height;
-  background-image:url('/assets/rpg_texture_pack0.png');
-  background-color: blue;
-}
-
-.icon.blackberry {background-position: 00 * $icon_width + $icon_width_buffer  00 * $icon_height + $icon_height_buffer;}
-.icon.cherry     {background-position: 01 * $icon_width + $icon_width_buffer  00 * $icon_height + $icon_height_buffer;}
-
-.icon.acorn      {background-position: 13 * $icon_width + $icon_width_buffer  00 * $icon_height + $icon_height_buffer;}
-.icon.radish     {background-position: 00 * $icon_width + $icon_width_buffer  01 * $icon_height + $icon_height_buffer;}
-
-.icon.run        {background-position: 03 * $icon_width + $icon_width_buffer  26 * $icon_height + $icon_height_buffer;}
-.icon.turn       {background-position: 01 * $icon_width + $icon_width_buffer  26 * $icon_height + $icon_height_buffer;}
-.icon.attack     {background-position: 00 * $icon_width + $icon_width_buffer  25 * $icon_height + $icon_height_buffer;}
-.icon.heal       {background-position: 07 * $icon_width + $icon_width_buffer  22 * $icon_height + $icon_height_buffer;}
-.icon.retreat    {background-position: 06 * $icon_width + $icon_width_buffer  22 * $icon_height + $icon_height_buffer;}
 
 /* begin map */
 
 $icon_width: -32px;
 $icon_height: -32px;
+$icon_width_buffer: 0px;
+$icon_height_buffer: 0px;
 
 #map {
   .row {
@@ -178,3 +144,103 @@ $icon_height: -32px;
 
   }
 }
+
+
+/* begin scratchStone */
+
+$icon_width: -34px;
+$icon_height: -34px;
+$icon_width_buffer: 0px;
+$icon_height_buffer: 0px;
+
+.item {
+  float: left;
+  margin: 0 auto;
+}
+
+.item.conditional {
+  border-radius: 10px;
+  padding: 10px; 
+  background-color: yellow;
+  background-image: url(http://superwalrusland.com/ohr/issue26/pa/crack1_b.jpg);
+  color: #D8F15E;
+
+  .conditionContainer {
+    width: 100%;
+    margin: 0 5px 5px 0;
+    .item {
+      float: center;
+    }
+  }
+  .path {
+    float: left;
+  }
+  .path-true {
+    border: 2px solid #D8F15E;
+  }
+  .path-false {
+    border: 2px solid red;
+  }
+}
+
+.item.stack {
+  border-radius: 10px;
+  padding: 10px; 
+  background-image: url(http://superwalrusland.com/ohr/issue26/pa/crack1_b.jpg);
+  color: #D8F15E;
+
+  .path {
+    float: left;
+    border: 2px solid green;
+  }
+}
+
+.item.placeholder {
+  width: -$icon_width;
+  height: -$icon_height;
+  background-color: purple;
+  color: grey; 
+}
+
+.flag {
+  width: 30px; 
+  height: 30px;
+  background-color: black;
+  padding: 5px; 
+}
+.flagHolder {
+  height: -$icon_height + 25px;
+}
+.bank {
+  background-image: none;
+  background-color: grey;
+  width: 100%;
+  height: 100px;
+
+  .item:not(.placeholder) {
+    margin: 0 10px 10px 0;
+  } 
+  .item.conditional {
+
+  }
+}
+
+.icon {
+  width: 0 - $icon_width;
+  height: 0 - $icon_height;
+  background-image:url('/assets/rpg_texture_pack0.png');
+  background-color: blue;
+}
+
+.icon.blackberry {background-position: 00 * $icon_width + $icon_width_buffer  00 * $icon_height + $icon_height_buffer;}
+.icon.cherry     {background-position: 01 * $icon_width + $icon_width_buffer  00 * $icon_height + $icon_height_buffer;}
+
+.icon.acorn      {background-position: 13 * $icon_width + $icon_width_buffer  00 * $icon_height + $icon_height_buffer;}
+.icon.radish     {background-position: 00 * $icon_width + $icon_width_buffer  01 * $icon_height + $icon_height_buffer;}
+
+.icon.run        {background-position: 03 * $icon_width + $icon_width_buffer  26 * $icon_height + $icon_height_buffer;}
+.icon.turn       {background-position: 01 * $icon_width + $icon_width_buffer  26 * $icon_height + $icon_height_buffer;}
+.icon.attack     {background-position: 00 * $icon_width + $icon_width_buffer  25 * $icon_height + $icon_height_buffer;}
+.icon.heal       {background-position: 07 * $icon_width + $icon_width_buffer  22 * $icon_height + $icon_height_buffer;}
+.icon.retreat    {background-position: 06 * $icon_width + $icon_width_buffer  22 * $icon_height + $icon_height_buffer;}
+
